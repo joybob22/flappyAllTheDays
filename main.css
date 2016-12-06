@@ -1,0 +1,30 @@
+h1, h2, h3, div, p, html, body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: black;
+}
+
+h1 {
+    text-align: center;
+    color: chartreuse;
+}
+
+canvas {
+    display: block;
+    position: absolute;
+    margin: auto;
+    margin-top: 100px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 5px;
+}
+
+#title {
+    margin-top: 5px;
+}
