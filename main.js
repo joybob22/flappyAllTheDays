@@ -18,7 +18,25 @@ var frames = 0,
     foregroundPosition = 0,
     score = 0,
     passed = true,
-    iteration = 0;
+    iteration = 0,
+    highScore = localStorage.getItem("highScore"),
+    okButton;
+
+function updateHighScore(score) {
+    if(highScore == null) {
+        localStorage.setItem("highScore", 0);
+        document.getElementById("highscore").innerHTML = "High score: " + 0;
+    }
+    else if(score === 0) {
+        document.getElementById("highscore").innerHTML = "High score: " + localStorage.getItem("highScore");
+    } else {
+        if(localStorage.getItem("highScore") < score) {
+            localStorage.setItem("highScore", score);
+            document.getElementById("highscore").innerHTML = "High score: " + localStorage.getItem("highScore");
+        }
+
+    }
+}
 
 function PipeCollection() {
     this._pipes = [];
@@ -59,7 +77,8 @@ function PipeCollection() {
                         if(iteration === 2) {
                             score = 1;
                         }
-                        document.getElementById("score").innerHTML = "Score: " + score;
+                        document.getElementById("score").innerHTML = "Current score: " + score;
+                        updateHighScore(score);
                     }
                 }
             }
@@ -202,6 +221,7 @@ function main() {
     windowSetup();
     canvasSetup();
     loadGraphics();
+    updateHighScore(0);
     currentState = states.Splash;
     document.body.appendChild(canvas);
 
@@ -231,6 +251,24 @@ function onpress(event) {
             fish.jump();
             break;
         case states.Score:
+            var mouseX = event.offsetX, mouseY = event.offsetY;
+
+            if (mouseX == null || mouseY == null) {
+                mouseX = event.touches[0].clientX;
+                mouseY = event.touches[0].clientY;
+            }
+
+            // Check if within the okButton
+            if (okButton.x < mouseX && mouseX < okButton.x + okButton.width &&
+                okButton.y < mouseY && mouseY < okButton.y + okButton.height
+            ) {
+                //console.log('click');
+                pipes.reset();
+                iteration = 0;
+                currentState = states.Splash;
+                score = 0;
+                document.getElementById("score").innerHTML = "Current score: " + 0;
+            }
             break;
     }
 }
@@ -252,9 +290,17 @@ function loadGraphics() {
     img.onload = function() {
         initSprites(this);
         renderingContext.fillStyle = "#8be4fd";
+
+        okButton = {
+            x: (width - okButtonSprite.width) / 2,
+            y: height - 200,
+            width: okButtonSprite.width,
+            height: okButtonSprite.height
+        };
         gameLoop();
         //fishSprite[1].draw(renderingContext, 50, 50);
     };
+
 }
 
 function gameLoop() {
@@ -285,7 +331,9 @@ function render() {
     pipes.draw(renderingContext);
     fish.draw(renderingContext);
 
-
+    if(currentState === states.Score) {
+        okButtonSprite.draw(renderingContext, okButton.x, okButton.y);
+    }
 
     foregroundSprite.draw(renderingContext, foregroundPosition, height - foregroundSprite.height + 1);
     foregroundSprite.draw(renderingContext, foregroundPosition + foregroundSprite.width, height - foregroundSprite.height + 1);
