@@ -25,6 +25,7 @@ var frames = 0,
 function updateHighScore(score) {
     if(highScore == null) {
         localStorage.setItem("highScore", 0);
+        highScore = 0;
         document.getElementById("highscore").innerHTML = "High score: " + 0;
     }
     else if(score === 0) {
