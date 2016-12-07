@@ -327,9 +327,13 @@ function update() {
 
 function render() {
     renderingContext.fillRect(0, 0, width, height);
-    //backgroundSprite.draw(renderingContext, 0, 150);
+    backgroundSprite.draw(renderingContext, 0, 450);
     pipes.draw(renderingContext);
     fish.draw(renderingContext);
+
+    if(currentState === states.Splash) {
+        clickTitleSprite.draw(renderingContext, 400, 265);
+    }
 
     if(currentState === states.Score) {
         okButtonSprite.draw(renderingContext, okButton.x, okButton.y);

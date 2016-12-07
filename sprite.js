@@ -9,6 +9,7 @@ var foregroundSprite;
 var topPipeSprite;
 var bottomPipeSprite;
 var okButtonSprite;
+var clickTitleSprite;
 
 function Sprite(img, x, y, width, height) {
     this.img = img;
@@ -31,9 +32,11 @@ function initSprites(img) {
 
     bottomPipeSprite = new Sprite(img, 412, 218, 81, 741);
     topPipeSprite = new Sprite(img, 498, 219, 83, 664);
-    //backgroundSprite = new Sprite(img, 45, 150, 100, 40);
+    backgroundSprite = new Sprite(img, 0, 962, 1000, 239);
 
     okButtonSprite = new Sprite(img, 17, 474, 114, 41);
 
     foregroundSprite = new Sprite(img, 13, 235, 288, 74);
+
+    clickTitleSprite = new Sprite(img, 47, 586, 256, 46);
 }

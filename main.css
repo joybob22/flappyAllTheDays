@@ -19,6 +19,7 @@ h1, h2 {
 
 canvas {
     display: block;
+    cursor: pointer;
     position: absolute;
     margin: auto;
     margin-top: 130px;
